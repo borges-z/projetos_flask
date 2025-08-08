@@ -1,0 +1,15 @@
+Calculadora de IMC
+Objetivo:
+Praticar lógica de backend, validações, reutilização de templates e feedback ao usuário.
+
+Funcionalidade:
+Formulário com peso (kg) e altura (m).
+
+Backend calcula o IMC e classifica (abaixo do peso, normal, sobrepeso, etc).
+
+Mostra resultado na mesma página.
+
+Extras:
+Validar que altura/peso são positivos.
+
+Mostrar erro amigável se não forem.

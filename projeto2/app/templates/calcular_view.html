@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de IMC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center">
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+            <div class="md:flex">
+                <div class="md:flex-shrink-0 md:w-1/3 bg-gradient-to-br from-blue-500 to-purple-600 p-8 flex flex-col items-center justify-center">
+                    <div class="animate-float mb-6">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/1b7fabb3-27c2-405b-860c-37a6361347ea.png" alt="Ilustração de balança e fita métrica representando cálculo de IMC" class="w-40 h-40 rounded-full bg-white p-2" />
+                    </div>
+                    <h2 class="text-2xl font-bold text-white text-center mb-2">Calculadora de IMC</h2>
+                    <p class="text-blue-100 text-center">Informe seu peso e altura para calcular seu Índice de Massa Corporal</p>
+                </div>
+                <div class="p-8 w-full">
+                    <form method="POST" action="{{ url_for('calculadora') }}" class="space-y-6">
+                        {{ form.csrf_token() }}
+                        <div>
+                            <label for="weight" class="block text-sm font-medium text-gray-700">Peso (kg)</label>
+                            <div class="mt-1 relative rounded-md shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-weight text-gray-400"></i>
+                                </div>
+                                {{ form.peso(class_="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-3 px-4 border") }}
+                            </div>
+                            <p id="weightError" class="mt-2 text-sm text-red-600 hidden">Por favor, insira seu peso</p>
+                        </div>
+
+                        <div>
+                            <label for="height" class="block text-sm font-medium text-gray-700">Altura (m)</label>
+                            <div class="mt-1 relative rounded-md shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-ruler-vertical text-gray-400"></i>
+                                </div>
+                                {{ form.altura(class_="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-3 px-4 border") }}                            </div>
+                            <p id="heightError" class="mt-2 text-sm text-red-600 hidden">Por favor, insira sua altura</p>
+                        </div>
+
+                        <div class="bg-gray-100 p-4 rounded-md hidden" id="resultContainer">
+                            <h3 class="text-lg font-medium text-gray-800 mb-2">Resultado:</h3>
+                            <p id="imcResult" class="text-2xl font-bold"></p>
+                            <p id="imcClassification" class="mt-2"></p>
+                        </div>
+
+                        <div class="flex items-center">
+                            {{ form.submit(class_='w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-300') }}
+                        </div>
+                    </form>
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for messagem in messages %}
+                        <div class="mt-4 rounded-md p-4 bg-yellow-50 text-yellow-800 border border-yellow-200">
+                            <div class="flex items-center">
+                            <div class="flex-shrink-0 mr-2">
+                                <i class="fas fa-exclamation-circle text-yellow-500"></i>
+                            </div>
+                            <div class="text-sm font-medium">
+                                {{ messagem }}
+                            </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+
+                    {% if classificacao %}
+                    {% if classificacao == "Baixo peso" %}
+                        <div class="mt-4 rounded-md bg-blue-50 p-4">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                <i class="fas fa-info-circle h-5 w-5 text-blue-400"></i>
+                                </div>
+                                <div class="ml-3">
+                                <h3 class="text-sm font-medium text-blue-800">Atenção: Baixo peso</h3>
+                                <div class="mt-2 text-sm text-blue-700">
+                                    {{ classificacao }}
+                                    <p>Consulte seu resultado acima.</p>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% elif classificacao == "Peso Normal" %}
+                        <div class="mt-4 rounded-md bg-green-50 p-4">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                <i class="fas fa-check-circle h-5 w-5 text-green-400"></i>
+                                </div>
+                                <div class="ml-3">
+                                <h3 class="text-sm font-medium text-green-800">Cálculo realizado com sucesso!</h3>
+                                <div class="mt-2 text-sm text-green-700">
+                                    {{ classificacao }}
+                                    <p>Consulte seu resultado acima.</p>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% elif classificacao == "Excesso de peso" %}
+                        <div class="mt-4 rounded-md bg-yellow-50 p-4">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                <i class="fas fa-exclamation-circle h-5 w-5 text-yellow-400"></i>
+                                </div>
+                                <div class="ml-3">
+                                <h3 class="text-sm font-medium text-yellow-800">Atenção: Excesso de peso</h3>
+                                <div class="mt-2 text-sm text-yellow-700">
+                                    {{ classificacao }}
+                                    <p>Consulte seu resultado acima.</p>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% elif classificacao == "Obesidade de Classe 1" %}
+                    <div class="mt-4 rounded-md bg-orange-50 p-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                            <i class="fas fa-exclamation-circle h-5 w-5 text-orange-400"></i>
+                            </div>
+                            <div class="ml-3">
+                            <h3 class="text-sm font-medium text-orange-800">Alerta: Obesidade Classe 1</h3>
+                            <div class="mt-2 text-sm text-orange-700">
+                                {{ classificacao }}
+                                <p>Consulte seu resultado acima.</p>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% elif classificacao == "Obesidade de Classe 2" %}
+                    <div class="mt-4 rounded-md bg-red-50 p-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                            <i class="fas fa-times-circle h-5 w-5 text-red-400"></i>
+                            </div>
+                            <div class="ml-3">
+                            <h3 class="text-sm font-medium text-red-800">Atenção: Obesidade Classe 2</h3>
+                            <div class="mt-2 text-sm text-red-700">
+                                {{ classificacao }}
+                                <p>Consulte seu resultado acima.</p>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% elif classificacao == "Obesidade de Classe 3" %}
+                    <div class="mt-4 rounded-md bg-red-100 p-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                            <i class="fas fa-skull-crossbones h-5 w-5 text-red-700"></i>
+                            </div>
+                            <div class="ml-3">
+                            <h3 class="text-sm font-medium text-red-900">Urgente: Obesidade Classe 3</h3>
+                            <div class="mt-2 text-sm text-red-800">
+                                {{ classificacao }}
+                                <p>Consulte seu resultado acima e procure um profissional de saúde.</p>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endif %}
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    </script>
+</body>
+</html>
+

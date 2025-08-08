@@ -1,0 +1,1 @@
+SECRET_KEY = "Adicione a sua chave super secreta aqui"

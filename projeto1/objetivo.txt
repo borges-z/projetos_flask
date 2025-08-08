@@ -1,0 +1,13 @@
+Formulário de Contato Simples
+Objetivo:
+Aprender os fundamentos do Flask-WTF, como criar formulários, campos, validações e renderizar em HTML.
+
+Funcionalidade:
+Página com campos: nome, email, mensagem.
+
+Validação: todos os campos obrigatórios, e-mail válido.
+
+Após envio, mostra mensagem de "formulário enviado com sucesso".
+
+Extras opcionais:
+Salvar os dados enviados em um arquivo .txt.

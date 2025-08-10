@@ -1,0 +1,1 @@
+SECRET_KEY = "Sua-chave-super-secreta"

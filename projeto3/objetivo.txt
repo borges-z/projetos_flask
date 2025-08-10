@@ -1,0 +1,14 @@
+Validador de CPF
+Objetivo:
+Praticar lógica de validação personalizada, renderização condicional e design UX básico.
+
+Funcionalidade:
+Campo único para digitar um CPF.
+
+Ao enviar, mostra se é um CPF válido ou não, com base na fórmula real de validação.
+
+Extras:
+Usar validators.Regexp para garantir o formato.
+
+Implementar a verificação dos dígitos verificadores via função customizada.
+

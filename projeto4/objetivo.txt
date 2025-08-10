@@ -1,0 +1,15 @@
+To-Do List com Sessão
+Objetivo:
+Trabalhar com sessões (session), persistência temporária e manipulação de listas no backend.
+
+Funcionalidade:
+Usuário adiciona tarefas via formulário.
+
+Lista é exibida abaixo do formulário.
+
+Cada tarefa pode ser marcada como concluída ou removida.
+
+Extras:
+Tarefas armazenadas na session.
+
+TailwindCSS para uma UI mínima e decente.

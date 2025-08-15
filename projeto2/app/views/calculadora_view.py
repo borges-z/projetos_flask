@@ -27,5 +27,5 @@ def calculadora():
             classificacao = "Obesidade de Classe 3"
         print(imc)
         print(classificacao)
-        return render_template('calcular_view.html', form=form, classificacao=classificacao)
-    return render_template('calcular_view.html', form=form)
+        return render_template('calcular.html', form=form, classificacao=classificacao)
+    return render_template('calcular.html', form=form)

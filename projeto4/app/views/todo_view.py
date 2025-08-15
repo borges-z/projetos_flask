@@ -17,4 +17,4 @@ def todo():
         tarefas.append([tarefa, status])
         session['tarefas'] = tarefas
         return redirect(url_for("todo"))
-    return render_template("todo_view.html", form=form, tarefas=session['tarefas'])
+    return render_template("todo.html", form=form, tarefas=session['tarefas'])

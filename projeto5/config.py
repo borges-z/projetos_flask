@@ -1,0 +1,1 @@
+SECRET_KEY = "Uma chave super mega secreta"

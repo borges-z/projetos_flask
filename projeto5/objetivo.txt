@@ -1,0 +1,19 @@
+Registro e Login de Usuário (sem banco)
+Objetivo:
+Simular um fluxo completo de autenticação, trabalhar com rotas protegidas, e manipulação de dicionários como banco em memória.
+
+Funcionalidade:
+Formulário de registro: nome, email, senha (com validações).
+
+Formulário de login.
+
+Se logado, mostra uma página "área do usuário".
+
+Logout destrói a sessão.
+
+Extras:
+Usar PasswordField com EqualTo para confirmação.
+
+Validar se e-mail já está em uso (em um dicionário interno).
+
+Criar um dicionário como "banco de dados" fake (ex: {"usuario@email.com": {"nome": ..., "senha": ...}}).

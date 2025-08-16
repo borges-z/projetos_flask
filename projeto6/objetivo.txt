@@ -1,0 +1,16 @@
+Lista de Contatos
+
+Objetivo: CRUD básico com um único modelo.
+
+Funcionalidade:
+
+Modelo Contato com id, nome, telefone e email.
+
+Rotas para listar, adicionar, editar e excluir contatos.
+
+Templates simples para cada operação.
+
+
+Extra:
+
+Validação para não permitir e-mails duplicados.
